@@ -1,8 +1,8 @@
-## Juego Breack Ball
+# Juego Breack Ball
 
 Prueba de juego con javascscript
 
-# Parte 1
+## Parte 1
 
 Antes de que podamos programar la parte funcional del juego, donde necesite crear la estructura básica de la página que lo va a contener. Podemos hacerlo utilizando HTML y el elemento  <canvas> .
 En el siguiente codigo se muestra como se creo el lienzo donde se va a mostrar el juego.
@@ -28,7 +28,7 @@ En el siguiente codigo se muestra como se creo el lienzo donde se va a mostrar e
 </body>
 </html>
 
-# Parte 2
+## Parte 2
 
 Para actualizar el dibujo del lienzo en cada fotograma, se necesito definir una función de dibujo que se ejecutará una y otra vez, cambiando una serie de variables para modificar la posición de cada personaje (sprite). Para que una misma función se ejecute una y otra vez se utulizo una función de sincronización de JavaScript, como setInterval() or requestAnimationFrame() a si como algunas variables, esto con el fin de que se crear el efecto de movimiento y poder alterar su velocidad y su paleta de color.
 
@@ -57,7 +57,7 @@ function draw() {
 setInterval(draw, 10);
 
 
-# Parte 3
+## Parte 3
 
 Para hacer que la pelota rebote en los cuatro bordes del Canvas se necesitaron definir las colisiones o hitbox.
 Para detectar la colisión se necesita verificar si la bola está tocando (chocando con) la pared y si es así, cambiaremos la dirección de su movimiento en consecuencia.
@@ -91,7 +91,7 @@ function draw() {
 setInterval(draw, 10);
 
 
-# Parte 4
+## Parte 4
 
 Para poder crear interactividad se necesito crear una paleta para golpear la bola por lo que se tuvo definir variables para conseguirlo, paddleHeight servirá para definir la altura de la paleta, paddleWidth la anchura y paddleX la posición en el eje X en la que empieza a dibujarse. Definimos una función que dibujará la paleta en la pantalla. Pero hay que lograr que la paleta responda a las instrucciones del usuario por lo que se necesito crear unas funciones que lo permitan.
 
@@ -145,7 +145,7 @@ function draw() {
 
 setInterval(draw, 10);
  
-# Parte 5
+## Parte 5
  
 Ahora hay se implemento un fin del juego en nuestro codigo por lo que se tuvo que definir las condiciones en las cuales este evento ocurre y en el caso de este juego seria cuando la pelota toque la parte inferior.
 
@@ -183,7 +183,7 @@ function draw() {
 
 setInterval(draw, 10);
 
-# Parte 6
+## Parte 6
 
 Como el objetivo del juego es romper ladrillos con la bola es necesario que crearlos. Podríamos dibujar los ladrillos uno a uno o podemos usar lo aprendido hasta ahora y simplemente crear una función para que el programa nos los dibuje por nosotros, inclusive podemos crear una variable para que el programa nos seleccione el color de los ladrillos por nosotros.
 
@@ -240,7 +240,7 @@ function draw() {
 
 setInterval(draw, 10);
 
-# Parte 7
+## Parte 7
 
 Para lograr que la pelota interactue con los ladrillos se necesito a definir una función que, con un bucle, recorrerá todos los ladrillos y comparará la posición de cada uno con la posición de la bola, cada vez que se dibuje un fotograma, esto con el fin de poder identificar las colisiones de los ladrillos y la bola pueda interactuar con los mismos.
 
@@ -295,7 +295,7 @@ function draw(){
 
 setInterval(draw,10);
 
-# Parte 8
+## Parte 8
 
 Ahora que tenemos las colisiones podemos aplicar los contadores para llevar el conteo de los puntos que llevamos y utilizando lo que hemos aprendido hasta ahora podemos crear una función que nos muestre el puntaje con la ayuda de la función de colisiones que hicimos para que el programa sepa cuando hizo un punto y gracias a que llevamos un conteo de los puntos ya podremos definir las condiciones de victoria para el jugador teniendo en cuenta los puntajes.
 
@@ -323,7 +323,7 @@ function drawScore() {
     ctx.fillText("Score: "+score, 8, 20);
 }
 
-# Parte 9
+## Parte 9
 
 Ya que se quizo pulir un poco más el juego se implemento una forma de cambiar la posición de la pala basándonos en las coordenadas del puntero del ratón haciendo una función similar a la de la detención de botones, pero ahora teniendo en cuenta las coordenadas del ratón. 
 
@@ -334,7 +334,7 @@ function mouseMoveHandler(e) {
     }
   }
   
-# Parte 10
+## Parte 10
 
 Para terminar, Se decodio dar vidas al jugador para evitar que el juego termine muy rápido y darle más oportunidades al jugador de fallar y así definir las condiciones de fin del juego de acurdo con estos nuevos datos.
 

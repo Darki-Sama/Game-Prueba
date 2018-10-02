@@ -89,6 +89,7 @@ function draw() {
 
 setInterval(draw, 10);
 
+
 parte 4
 
 Para poder crear interactividad se necesito crear una paleta para golpear la bola por lo que se tuvo definir variables para conseguirlo, paddleHeight servirá para definir la altura de la paleta, paddleWidth la anchura y paddleX la posición en el eje X en la que empieza a dibujarse. Definimos una función que dibujará la paleta en la pantalla. Pero hay que lograr que la paleta responda a las instrucciones del usuario por lo que se necesito crear unas funciones que lo permitan.

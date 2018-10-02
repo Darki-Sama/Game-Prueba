@@ -1,10 +1,11 @@
 ## Juego Breack Ball
-#Prueba de juego con javascscript
+//Prueba de juego con javascscript
 
-#Parte 1
+//Parte 1
 
 Antes de que podamos programar la parte funcional del juego, donde necesite crear la estructura básica de la página que lo va a contener. Podemos hacerlo utilizando HTML y el elemento  <canvas> .
-En el siguiente codigo se muestra el lienzo donde se trabaja
+En el siguiente codigo se muestra como se creo el lienzo donde se va a mostrar el juego.
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,3 +26,5 @@ En el siguiente codigo se muestra el lienzo donde se trabaja
 
 </body>
 </html>
+
+//Parte 2

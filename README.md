@@ -119,4 +119,276 @@ function keyUpHandler(e) {
         leftPressed = false;
     }
 }
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBall();
+    drawPaddle();
+    
+    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+    }
+    if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
+        dy = -dy;
+    }
+    
+    if(rightPressed && paddleX < canvas.width-paddleWidth) {
+        paddleX += 7;
+    }
+    else if(leftPressed && paddleX > 0) {
+        paddleX -= 7;
+    }
+    
+    x += dx;
+    y += dy;
+}
 
+setInterval(draw, 10);
+ 
+ Parte 5
+ 
+Ahora hay se implemento un fin del juego en nuestro codigo por lo que se tuvo que definir las condiciones en las cuales este evento ocurre y en el caso de este juego seria cuando la pelota toque la parte inferior.
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBall();
+    drawPaddle();
+    
+    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+    }
+    if(y + dy < ballRadius) {
+        dy = -dy;
+    }
+    else if(y + dy > canvas.height-ballRadius) {
+        if(x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
+        }
+        else {
+            alert("Perdiste");
+            document.location.reload();
+        }
+    }
+    
+    if(rightPressed && paddleX < canvas.width-paddleWidth) {
+        paddleX += 7;
+    }
+    else if(leftPressed && paddleX > 0) {
+        paddleX -= 7;
+    }
+    
+    x += dx;
+    y += dy;
+}
+
+setInterval(draw, 10);
+
+Parte 6
+
+Como el objetivo del juego es romper ladrillos con la bola es necesario que crearlos. Podríamos dibujar los ladrillos uno a uno o podemos usar lo aprendido hasta ahora y simplemente crear una función para que el programa nos los dibuje por nosotros, inclusive podemos crear una variable para que el programa nos seleccione el color de los ladrillos por nosotros.
+
+var brickRowCount = 7;
+var brickColumnCount = 8;
+var brickWidth = 75;
+var brickHeight = 20;
+var brickPadding = 10;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
+var colorR = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+
+var bricks = [];
+for(c=0; c<brickColumnCount; c++) {
+    bricks[c] = [];
+    for(r=0; r<brickRowCount; r++) {
+        bricks[c][r] = { x: 0, y: 0 };
+    }
+}
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBricks();
+    drawBall();
+    drawPaddle();
+    
+    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+    }
+    if(y + dy < ballRadius) {
+        dy = -dy;
+    }
+    else if(y + dy > canvas.height-ballRadius) {
+        if(x > paddleX && x < paddleX + paddleWidth) {
+           if(y= y-paddleHeight){
+            dy = -dy  ;
+			 }
+        }
+        else {
+            alert("Perdiste");
+            document.location.reload();
+        }
+    }
+    
+    if(rightPressed && paddleX < canvas.width-paddleWidth) {
+        paddleX += 7;
+    }
+    else if(leftPressed && paddleX > 0) {
+        paddleX -= 7;
+    }
+    
+    x += dx;
+    y += dy;
+}
+
+setInterval(draw, 10);
+
+Parte 7
+
+Para lograr que la pelota interactue con los ladrillos se necesito a definir una función que, con un bucle, recorrerá todos los ladrillos y comparará la posición de cada uno con la posición de la bola, cada vez que se dibuje un fotograma, esto con el fin de poder identificar las colisiones de los ladrillos y la bola pueda interactuar con los mismos.
+
+function collisionDetection() {
+    for(c=0; c<brickColumnCount; c++) {
+        for(r=0; r<brickRowCount; r++) {
+            var b = bricks[c][r];
+            if(b.status == 1) {
+                if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                    dy = -dy;
+                    b.status = 0;
+                }
+            }
+        }
+    }
+}
+function draw(){
+	ctx.clearRect(0,0,canvas.width,canvas.height);
+	drawBricks();
+	drawBall();
+	drawPaddle();
+	collisionDetection();
+ if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+    }
+    if(y + dy < ballRadius) {
+        dy = -dy;
+    }
+    else if(y + dy > canvas.height-ballRadius) {
+        if(x > paddleX && x < paddleX + paddleWidth) {
+			 if(y= y-paddleHeight){
+            dy = -dy  ;
+			 }
+        }
+        else {
+            alert("Perdiste");
+            document.location.reload();
+        }
+    }
+	if(rightPressed && paddleX<canvas.width-paddleWidth){
+		
+		paddleX+=7;
+		}
+	 else if(leftPressed && paddleX>0 ){
+		 paddleX-=7;
+		 
+		 }
+		 
+		 x=x+dx;
+	     y=y+dy;
+	}
+
+setInterval(draw,10);
+
+Parte 8
+
+Ahora que tenemos las colisiones podemos aplicar los contadores para llevar el conteo de los puntos que llevamos y utilizando lo que hemos aprendido hasta ahora podemos crear una función que nos muestre el puntaje con la ayuda de la función de colisiones que hicimos para que el programa sepa cuando hizo un punto y gracias a que llevamos un conteo de los puntos ya podremos definir las condiciones de victoria para el jugador teniendo en cuenta los puntajes.
+
+function collisionDetection() {
+    for(c=0; c<brickColumnCount; c++) {
+        for(r=0; r<brickRowCount; r++) {
+            var b = bricks[c][r];
+            if(b.status == 1) {
+                if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight) {
+                    dy = -dy;
+                    b.status = 0;
+                    score++;
+                    if(score == brickRowCount*brickColumnCount) {
+                        alert("Ganaste");
+                        document.location.reload();
+                    }
+                }
+            }
+        }
+    }
+}
+function drawScore() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Score: "+score, 8, 20);
+}
+
+Parte 9 
+
+Ya que se quizo pulir un poco más el juego se implemento una forma de cambiar la posición de la pala basándonos en las coordenadas del puntero del ratón haciendo una función similar a la de la detención de botones, pero ahora teniendo en cuenta las coordenadas del ratón. 
+
+function mouseMoveHandler(e) {
+    var relativeX = e.clientX - canvas.offsetLeft;
+    if(relativeX > 0 && relativeX < canvas.width) {
+        paddleX = relativeX - paddleWidth/2;
+    }
+  }
+  
+Parte 10
+
+Para terminar, Se decodio dar vidas al jugador para evitar que el juego termine muy rápido y darle más oportunidades al jugador de fallar y así definir las condiciones de fin del juego de acurdo con estos nuevos datos.
+
+function drawLives() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+}
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBricks();
+    drawBall();
+    drawPaddle();
+    drawScore();
+    drawLives();
+    collisionDetection();
+    
+    if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
+        dx = -dx;
+    }
+    if(y + dy < ballRadius) {
+        dy = -dy;
+    }
+    else if(y + dy > canvas.height-ballRadius) {
+        if(x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
+        }
+        else {
+            lives--;
+            if(!lives) {
+                alert("Perdiste");
+                document.location.reload();
+            }
+            else {
+                x = canvas.width/2;
+                y = canvas.height-30;
+                dx = 3;
+                dy = -3;
+                paddleX = (canvas.width-paddleWidth)/2;
+            }
+        }
+    }
+    
+    if(rightPressed && paddleX < canvas.width-paddleWidth) {
+        paddleX += 7;
+    }
+    else if(leftPressed && paddleX > 0) {
+        paddleX -= 7;
+    }
+    
+    x += dx;
+    y += dy;
+    requestAnimationFrame(draw);
+}
+
+   
+    
+    
